@@ -2,7 +2,7 @@ import random as die
 from characterBase import Main_Character
 
 class Piercer(Main_Character):
-    def __init__(self, HP = 40, DEF = 0, minATK = 8, maxATK = 10, critChance = 8):
+    def __init__(self, HP = 40, DEF = 0, minATK = 4, maxATK = 6, critChance = 8):
         super().__init__(HP, DEF, minATK, maxATK)
         self.critChance = critChance
         self.arrow_rain_cooldown = 0
@@ -63,7 +63,29 @@ class Piercer(Main_Character):
     
     
 #TODO: Add class Baller
-
+class Baller(Main_Character):
+    def __init__(self, HP = 35, DEF = 0, minATK = 8, maxATK = 10):
+        super().__init__(HP, DEF, minATK, maxATK)
+        self.extradamage = 5
+        self.extradamagechance = 6
+    
+    # Activate to throw a ball at the enemy, with a chance to deal extra damage.
+    def ball_attack(self):
+        if die.randint(1, self.extradamagechance) == 1:
+            print(f"Dealt {self.extradamage} extra damage!")
+            return super().attack() + self.extradamage
+        else:
+            dmg = die.randint(self.minattack, self.maxattack)
+            print(f"Dealt {dmg} damage!")
+            return dmg
+    
+    # Activate to throw three balls consecutively, dealing three hits of damage to the enemy.
+    def Triple_Throw(self):
+        total_dmg = 0
+        for _ in range(3):
+            total_dmg += die.randint(self.minattack, self.maxattack)
+        print(total_dmg)
+        return total_dmg
 
 #TODO: Add class Slicer
 
