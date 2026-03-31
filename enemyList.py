@@ -10,7 +10,10 @@ class Enemy:
         return die.randint(self.minATK, self.maxATK)
     
     def take_damage(self, damage):
-        self.hp -= damage
+        if damage > self.hp:
+            self.hp = 0
+        else:
+            self.hp -= damage
     
 class Goblin(Enemy):
     def __init__(self, HP = 10, minATK = 2, maxATK = 4):
