@@ -62,4 +62,12 @@ class Piercer(Main_Character):
         return f"Piercer\nHP: {self.hp}\nDEF: {self.defense}\nATK: {self.minattack}-{self.maxattack}\nCrit Chance: 1 in {self.critChance}\nArrow Rain (3 turn cooldown): Activate to send a rain of arrows, dealing 5 damage to all enemies.\n"
     
     
-#TODO:
+#TODO: Add class Baller
+
+
+#TODO: Add class Slicer
+
+
+#TODO: Add class Crusher
+
+
