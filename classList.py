@@ -23,10 +23,14 @@ class Piercer(Main_Character):
                 print(f"Healed for {healing} HP!")
                 
             self.arrow_rain_CD -= 1 if self.arrow_rain_CD > 0 else 0
+            self.arrow_explosion_CD -= 1 if self.arrow_explosion_CD > 0 else 0
+            self.multiple_glories_CD -= 1 if self.multiple_glories_CD > 0 else 0
             return crit_hit
         else:
             print(f"Normal hit.")
             self.arrow_rain_CD -= 1 if self.arrow_rain_CD > 0 else 0
+            self.arrow_explosion_CD -= 1 if self.arrow_explosion_CD > 0 else 0
+            self.multiple_glories_CD -= 1 if self.multiple_glories_CD   1 > 0 else 0
             return super().attack()
         
     # Activate to send a rain of arrows down on all enemies, dealing 5 damage. Cooldown of 3 turns.
