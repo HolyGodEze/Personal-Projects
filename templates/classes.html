@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Classes — RPG Project{% endblock %}
+
+{% block content %}
+<h1>Classes</h1>
+<p class="subtitle">Choose your path. Each class brings a unique playstyle to the battlefield.</p>
+
+<div class="grid-2">
+{% for cls in classes %}
+<div class="card" style="animation-delay: {{ loop.index0 * 0.15 }}s; border-top: 3px solid {{ cls.color }};">
+    <div class="tag">{{ cls.tag }}</div>
+    <h2 style="color: {{ cls.color }}; margin-bottom:0.5rem;">{{ cls.name }}</h2>
+    <p style="color:var(--text-dim); font-size:1rem; margin-bottom:1.2rem;">{{ cls.description }}</p>
+
+    <div class="stat-row">
+        <div class="stat">
+            <span class="stat-val">{{ cls.hp }}</span>
+            <span class="stat-lbl">HP</span>
+        </div>
+        <div class="stat">
+            <span class="stat-val">{{ cls.defense }}</span>
+            <span class="stat-lbl">DEF</span>
+        </div>
+        <div class="stat">
+            <span class="stat-val">{{ cls.atk_min }}–{{ cls.atk_max }}</span>
+            <span class="stat-lbl">ATK</span>
+        </div>
+        <div class="stat">
+            <span class="stat-val" style="font-size:1rem;">{{ cls.crit_chance }}</span>
+            <span class="stat-lbl">Crit</span>
+        </div>
+    </div>
+
+    <hr class="divider" style="margin: 1.2rem 0;">
+
+    <h3 style="margin-bottom:0.5rem; font-size:0.8rem; letter-spacing:0.1em;">Abilities</h3>
+    {% for ability in cls.abilities %}
+    <div class="ability">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+            <span class="ability-name">{{ ability.name }}</span>
+            {% if ability.cooldown is defined %}
+            <span class="ability-cd">CD: {{ ability.cooldown }} turns</span>
+            {% endif %}
+        </div>
+        <p>{{ ability.description }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endfor %}
+</div>
+
+{% if classes|length < 4 %}
+<div class="card" style="margin-top:1.5rem; border-style:dashed; text-align:center; opacity:0.5;">
+    <p style="color:var(--text-dim); font-style:italic;">More classes coming soon — Slicer, Crusher, and beyond...</p>
+</div>
+{% endif %}
+{% endblock %}

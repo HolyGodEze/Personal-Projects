@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RPG Showcase{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0d0d0f;
+            --surface: #14141a;
+            --surface2: #1c1c26;
+            --border: #2a2a3a;
+            --gold: #c8a84b;
+            --gold-dim: #7a6530;
+            --text: #e8e0cc;
+            --text-dim: #8a8070;
+            --red: #c04a4a;
+            --blue: #5b8dd9;
+            --green: #6abf69;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 18px;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Background texture */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(200, 168, 75, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 90%, rgba(91, 141, 217, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(13, 13, 15, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            height: 60px;
+        }
+
+        nav .logo {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.95rem;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+            padding: 0.25rem 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem 6rem;
+        }
+
+        h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--gold);
+            letter-spacing: 0.04em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.2rem;
+            color: var(--gold);
+            letter-spacing: 0.06em;
+        }
+
+        h3 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            color: var(--text);
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2.5rem 0;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2rem;
+            transition: border-color 0.3s, transform 0.2s;
+            animation: fadeUp 0.5s ease both;
+        }
+
+        .card:hover {
+            border-color: var(--gold-dim);
+            transform: translateY(-2px);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.7rem;
+            border-radius: 2px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+        }
+
+        .stat-row {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .stat-val {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .stat-lbl {
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        .ability {
+            background: var(--surface2);
+            border-left: 3px solid var(--gold-dim);
+            padding: 0.8rem 1rem;
+            margin-top: 0.75rem;
+            border-radius: 0 3px 3px 0;
+        }
+
+        .ability-name {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .ability-cd {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .ability p {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            margin-top: 0.25rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.4rem;
+            border: 1px solid var(--gold-dim);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: background 0.2s, color 0.2s;
+            font-family: 'Crimson Pro', serif;
+        }
+
+        .btn:hover {
+            background: var(--gold);
+            color: var(--bg);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">⚔ RPG Project</a>
+        <a href="/" {% if request.path == '/' %}class="active"{% endif %}>Home</a>
+        <a href="/classes" {% if request.path == '/classes' %}class="active"{% endif %}>Classes</a>
+        <a href="/enemies" {% if request.path == '/enemies' %}class="active"{% endif %}>Enemies</a>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
