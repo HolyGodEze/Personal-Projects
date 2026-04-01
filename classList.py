@@ -2,9 +2,9 @@ import random as die
 from characterBase import Main_Character
 
 class Piercer(Main_Character):
-    def __init__(self, HP = 40, DEF = 0, minATK = 4, maxATK = 6, critChance = 8):
+    def __init__(self, HP = 40, DEF = 0, minATK = 4, maxATK = 6):
         super().__init__(HP, DEF, minATK, maxATK)
-        self.critChance = critChance
+        self.critChance = 8
         self.arrow_rain_CD = 0
         self.arrow_explosion_CD = 0
         self.multiple_glories_CD = 5
@@ -72,16 +72,21 @@ class Baller(Main_Character):
         super().__init__(HP, DEF, minATK, maxATK)
         self.extradamage = 5
         self.extradamagechance = 6
-        self.triple_throw = 0
+        self.triple_throw_CD = 0
+        self.gigantic_throw_CD = 0
     
     # Activate to throw a ball at the enemy, with a chance to deal extra damage.
     def ball_attack(self):
         if die.randint(1, self.extradamagechance) == 1:
             print(f"Dealt {self.extradamage} extra damage!")
+            self.triple_throw_CD -= 1 if self.arrow_rain_CD > 0 else 0
+            self.gigantic_throw_CD -= 1 if self.arrow_rain_CD > 0 else 0
             return super().attack() + self.extradamage
         else:
-            dmg = die.randint(self.minattack, self.maxattack)
+            dmg = super().attack()
             print(f"Dealt {dmg} damage!")
+            self.triple_throw_CD -= 1 if self.arrow_rain_CD > 0 else 0
+            self.gigantic_throw_CD -= 1 if self.arrow_rain_CD > 0 else 0
             return dmg
     
     # Activate to throw three balls consecutively, dealing three hits of damage to the enemy. 2 turn CD.
@@ -92,8 +97,34 @@ class Baller(Main_Character):
         print(total_dmg)
         return total_dmg
     
+    # Activate to increase the size of the ball, before throwing it at the enemy, dealing 30 damage. 4 turn CD.
+    def Gigantic_Throw(self):
+        return 30
+    
+    def baller_stats_and_abilities(self):
+        return {
+            "name": "Baller",
+            "HP": self.hp,
+            "DEF": self.defense,
+            "min_ATK": self.minattack,
+            "max_ATK": self.maxattack,
+            "extra_dmg": self.extradamage,
+            "extra_dmg%": round((1/self.extradamagechance) * 100, 1),
+            "skills": [
+                self.ball_attack(),
+                self.Triple_Throw(),
+                self.Gigantic_Throw()
+            ],
+            "skills_CD": [
+                self.triple_throw_CD,
+                self.gigantic_throw_CD
+            ]
+        }
+    
     def __str__(self):
         return f"Baller\nHP: {self.hp}\nDEF: {self.defense}\nATK: {self.minattack}-{self.maxattack}\n"
+    
+
     
 
 #TODO: Add class Slicer
