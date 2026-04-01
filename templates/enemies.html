@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Enemies — RPG Project{% endblock %}
+
+{% block content %}
+<h1>Enemies</h1>
+<p class="subtitle">The creatures that stand between you and victory. Know your foes.</p>
+
+<div class="grid-2">
+{% for enemy in enemies %}
+<div class="card" style="animation-delay: {{ loop.index0 * 0.15 }}s; border-top: 3px solid {{ enemy.color }};">
+    <div class="tag">{{ enemy.tag }}</div>
+    <h2 style="color: {{ enemy.color }}; margin-bottom:0.5rem;">{{ enemy.name }}</h2>
+    <p style="color:var(--text-dim); font-size:1rem; margin-bottom:1.5rem;">{{ enemy.description }}</p>
+
+    <div class="stat-row">
+        <div class="stat">
+            <span class="stat-val">{{ enemy.hp }}</span>
+            <span class="stat-lbl">HP</span>
+        </div>
+        <div class="stat">
+            <span class="stat-val">{{ enemy.atk_min }}–{{ enemy.atk_max }}</span>
+            <span class="stat-lbl">ATK</span>
+        </div>
+    </div>
+
+    <hr class="divider" style="margin:1.2rem 0;">
+
+    <div style="font-size:0.9rem; color:var(--text-dim);">
+        <p><strong style="color:var(--text);">Threat level:</strong>
+        {% if enemy.hp <= 12 %}
+            <span style="color:var(--green);">Low — straightforward to defeat</span>
+        {% elif enemy.hp <= 20 %}
+            <span style="color:var(--gold);">Moderate — don't get careless</span>
+        {% else %}
+            <span style="color:var(--red);">High — approach with caution</span>
+        {% endif %}
+        </p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--text);">Max hit:</strong> {{ enemy.atk_max }} damage per turn</p>
+    </div>
+</div>
+{% endfor %}
+</div>
+
+<div class="card" style="margin-top:1.5rem; border-style:dashed; text-align:center; opacity:0.5;">
+    <p style="color:var(--text-dim); font-style:italic;">Bosses and more enemies coming soon...</p>
+</div>
+{% endblock %}
