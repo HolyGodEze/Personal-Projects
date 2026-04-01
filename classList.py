@@ -61,6 +61,35 @@ class Piercer(Main_Character):
         self.hp += 6
         return 25
         
+    def piercer_stats_and_abilities(self):
+        return {
+            "name": "Piercer",
+            "HP": self.hp,
+            "DEF": self.defense,
+            "min_ATK": self.minattack,
+            "max_ATK": self.maxattack,
+            "crit_chance": self.critChance,
+            "basic_attack": {
+                "description": "Shoots an arrow to the enemy, with a 12.5% "  + "chance of landing a critical hit. A critical hit deals double damage and heals 25% "  + "of the damage dealt."
+            },
+            "skills": [
+                {
+                    "skill_name": "Arrow Rain",
+                    "skill_CD": self.arrow_rain_CD,
+                    "description": f"Sends a rain of arrows down on all enemies, dealing 5 damage. Cooldown of 3 turns."
+                },
+                {
+                    "skill_name": "Arrow Explosion",
+                    "skill_CD": self.arrow_explosion_CD,
+                    "description": "Shoots an infused arrow with explosive power to a single enemy, dealing 24 damage. Cooldown of 4 turns."
+                },
+                {
+                    "skill_name": "One Shot, Multiple Glories",
+                    "skill_CD": self.multiple_glories_CD,
+                    "description": "Summons a massive arrow to the sky, striking all enemies for 25 damage. If this skill kills at least 1 enemy, cooldown is reduced by 2 turns. Heals 6 HP for every enemy killed. Starts with a cooldown of 5 turns."
+                }
+            ]
+        }
 
     def __str__(self):
         return f"Piercer\nHP: {self.hp}\nDEF: {self.defense}\nATK: {self.minattack}-{self.maxattack}\nCrit Chance: 1 in {self.critChance}\nArrow Rain (3 turn CD): Activate to send a rain of arrows, dealing 5 damage to all enemies.\nArrow Explosion (4 turn CD): Activate to shoot an infused arrow with explosive power to a single enemy, dealing 24 damage. Cooldown of 4 turns.\nOne Shot, Multiple Glories (5 turn CD): Activate to summon a massive arrow to the sky, striking all enemies for 25 damage. If this skill kills at least 1 enemy, cooldown is reduced by 2 turns. Heals 6 HP for every enemy killed. Starts with a cooldown of 5 turns."
@@ -110,14 +139,20 @@ class Baller(Main_Character):
             "max_ATK": self.maxattack,
             "extra_dmg": self.extradamage,
             "extra_dmg%": round((1/self.extradamagechance) * 100, 1),
+            "basic_attack": {
+                "description": "Throws a ball a the enemy, with a 16.7% " + "chance to deal 5 extra damage."
+            },
             "skills": [
-                self.ball_attack(),
-                self.Triple_Throw(),
-                self.Gigantic_Throw()
-            ],
-            "skills_CD": [
-                self.triple_throw_CD,
-                self.gigantic_throw_CD
+                {
+                    "skill_name": "Triple Throw",
+                    "skill_CD": self.triple_throw_CD,
+                    "description": "Throw three balls consecutively at the enemy, dealing three hits of damage to the enemy. Cooldown of 2 turns."
+                },
+                {
+                    "skill_name": "Gigantic Throw",
+                    "skill_CD": self.gigantic_throw_CD,
+                    "description": "Increases the size of the ball before throwing it at the enemy, dealing 30 damage. Cooldown of 4 turns."
+                }
             ]
         }
     
