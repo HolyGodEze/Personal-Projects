@@ -114,14 +114,14 @@ class Baller(Main_Character):
     def ball_attack(self):
         if die.randint(1, self.extradamagechance) == 1:
             print(f"Dealt {self.extradamage} extra damage!")
-            self.triple_throw_CD -= 1 if self.triple_throw_CD > 0 else 0
-            self.gigantic_throw_CD -= 1 if self.gigantic_throw_CD > 0 else 0
+            self.triple_throw_start_CD -= 1 if self.triple_throw_start_CD > 0 else 0
+            self.gigantic_throw_start_CD -= 1 if self.gigantic_throw_start_CD > 0 else 0
             return super().attack() + self.extradamage
         else:
             dmg = super().attack()
             print(f"Dealt {dmg} damage!")
-            self.triple_throw_CD -= 1 if self.triple_throw_CD > 0 else 0
-            self.gigantic_throw_CD -= 1 if self.gigantic_throw_CD > 0 else 0
+            self.triple_throw_start_CD -= 1 if self.triple_throw_start_CD > 0 else 0
+            self.gigantic_throw_start_CD -= 1 if self.gigantic_throw_start_CD > 0 else 0
             return dmg
     
     # Activate to throw three balls consecutively, dealing three hits of damage to the enemy. 2 turn CD.
