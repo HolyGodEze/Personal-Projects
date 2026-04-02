@@ -94,9 +94,6 @@ class Piercer(Main_Character):
                 }
             ]
         }
-
-    def __str__(self):
-        return f"Piercer\nHP: {self.hp}\nDEF: {self.defense}\nATK: {self.minattack}-{self.maxattack}\nCrit Chance: 1 in {self.critChance}\nArrow Rain (3 turn CD): Activate to send a rain of arrows, dealing 5 damage to all enemies.\nArrow Explosion (4 turn CD): Activate to shoot an infused arrow with explosive power to a single enemy, dealing 24 damage. Cooldown of 4 turns.\nOne Shot, Multiple Glories (5 turn CD): Activate to summon a massive arrow to the sky, striking all enemies for 25 damage. If this skill kills at least 1 enemy, cooldown is reduced by 2 turns. Heals 6 HP for every enemy killed. Starts with a cooldown of 5 turns."
     
     
 #TODO: Add class Baller
@@ -114,14 +111,14 @@ class Baller(Main_Character):
     def ball_attack(self):
         if die.randint(1, self.extradamagechance) == 1:
             print(f"Dealt {self.extradamage} extra damage!")
-            self.triple_throw_CD -= 1 if self.triple_throw_CD > 0 else 0
-            self.gigantic_throw_CD -= 1 if self.gigantic_throw_CD > 0 else 0
+            self.triple_throw_start_CD -= 1 if self.triple_throw_start_CD > 0 else 0
+            self.gigantic_throw_start_CD -= 1 if self.gigantic_throw_start_CD > 0 else 0
             return super().attack() + self.extradamage
         else:
             dmg = super().attack()
             print(f"Dealt {dmg} damage!")
-            self.triple_throw_CD -= 1 if self.triple_throw_CD > 0 else 0
-            self.gigantic_throw_CD -= 1 if self.gigantic_throw_CD > 0 else 0
+            self.triple_throw_start_CD -= 1 if self.triple_throw_start_CD > 0 else 0
+            self.gigantic_throw_start_CD -= 1 if self.gigantic_throw_start_CD > 0 else 0
             return dmg
     
     # Activate to throw three balls consecutively, dealing three hits of damage to the enemy. 2 turn CD.
@@ -163,11 +160,6 @@ class Baller(Main_Character):
                 }
             ]
         }
-    
-    def __str__(self):
-        return f"Baller\nHP: {self.hp}\nDEF: {self.defense}\nATK: {self.minattack}-{self.maxattack}\n"
-    
-
     
 
 #TODO: Add class Slicer
