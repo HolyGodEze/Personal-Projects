@@ -1,9 +1,8 @@
 import random as die
 from abc import abstractmethod, ABC
 class Main_Character(ABC):
-    def __init__(self, HP: int, DEF: int, minATK: int, maxATK: int):
+    def __init__(self, HP: int, minATK: int, maxATK: int):
         self.hp = HP
-        self.defense = DEF
         self.minattack = minATK
         self.maxattack= maxATK
         
