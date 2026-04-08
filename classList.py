@@ -181,6 +181,7 @@ class Baller(Main_Character):
             "max_ATK": self.maxattack,
             "extra_dmg": self.extra_damage,
             "extra_chance": f"{round((1/self.extra_damage_chance) * 100, 1)}%",
+            "dodge_chance": f"{round((1/self.dodge_chance) * 100, 1)}%",
             "color": "#e61111",
             "skills": [
                 {
