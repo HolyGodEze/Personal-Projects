@@ -2,8 +2,8 @@ import random as die
 from characterBase import Main_Character
 
 class Piercer(Main_Character):
-    def __init__(self, HP = 40, DEF = 0, minATK = 4, maxATK = 6):
-        super().__init__(HP, DEF, minATK, maxATK)
+    def __init__(self, HP = 40, minATK = 4, maxATK = 6):
+        super().__init__(HP, minATK, maxATK)
         self.critChance = 8
         self.arrow_rain_CD = 3
         self.arrow_rain_start_CD = 0
@@ -71,7 +71,6 @@ class Piercer(Main_Character):
         return {
             "name": "Piercer",
             "HP": self.hp,
-            "DEF": self.defense,
             "min_ATK": self.minattack,
             "max_ATK": self.maxattack,
             "crit_chance": f"{round(1 / self.critChance * 100, 1)}%",
@@ -102,8 +101,8 @@ class Piercer(Main_Character):
     
 
 class Baller(Main_Character):
-    def __init__(self, HP = 35, DEF = 0, minATK = 8, maxATK = 10):
-        super().__init__(HP, DEF, minATK, maxATK)
+    def __init__(self, HP = 35, minATK = 8, maxATK = 10):
+        super().__init__(HP, minATK, maxATK)
         self.extra_damage = 5
         self.extra_damage_chance = 6
         self.dodge_chance = 2
@@ -176,7 +175,6 @@ class Baller(Main_Character):
         return {
             "name": "Baller",
             "HP": self.hp,
-            "DEF": self.defense,
             "min_ATK": self.minattack,
             "max_ATK": self.maxattack,
             "extra_dmg": self.extra_damage,
@@ -209,8 +207,8 @@ class Baller(Main_Character):
 
 #TODO: Add class Slicer
 class Slicer(Main_Character):
-    def __init__(self, HP = 50, DEF = 2, minATK = 6, maxATK = 10):
-        super().__init__(HP, DEF, minATK, maxATK)
+    def __init__(self, HP = 50, minATK = 6, maxATK = 10):
+        super().__init__(HP, minATK, maxATK)
         self.pierce_dmg = 4
         self.pierce_chance = 3
         self.sword_thrust_CD = 2
@@ -226,7 +224,7 @@ class Slicer(Main_Character):
     # Slices the enemy with a sword, with a 33.3% chance of dealing piercing damage.
     def sword_attack(self):
         if die.randint(1, self.pierce_chance) == 1:
-            piercing_dmg = super().attack() + self.pierce_dmg
+            piercing_dmg = die.randint(self.minattack, self.maxattack) + self.pierce_dmg
             self.sword_thrust_start_CD -= 1 if self.sword_thrust_start_CD > 0 else 0
             self.sword_spin_start_CD -= 1 if self.sword_spin_start_CD > 0 else 0
             self.flurry_rush_start_CD -= 1 if self.flurry_rush_start_CD > 0 else 0
@@ -264,7 +262,6 @@ class Slicer(Main_Character):
         return {
             "name": "Slicer",
             "HP": self.hp,
-            "DEF": self.defense,
             "min_ATK": self.minattack,
             "max_ATK": self.maxattack,
             "pierce_dmg": self.pierce_dmg,
@@ -294,8 +291,8 @@ class Slicer(Main_Character):
         }
 #TODO: Add class Crusher
 class Crusher(Main_Character):
-    def __init__(self, HP = 80, DEF = 3, minATK = 9, maxATK = 12):
-        super().__init__(HP, DEF, minATK, maxATK)
+    def __init__(self, HP = 80, minATK = 9, maxATK = 12):
+        super().__init__(HP, minATK, maxATK)
         self.cooldown_turn = 1
         self.cooldown_chance = 4
         self.cyclone_cd = 3
@@ -341,7 +338,6 @@ class Crusher(Main_Character):
         return {
             "name": "Crusher",
             "HP": self.hp,
-            "DEF": self.defense,
             "min_ATK": self.minattack,
             "max_ATK": self.maxattack,
             "cd_turn": self.cooldown_turn,
