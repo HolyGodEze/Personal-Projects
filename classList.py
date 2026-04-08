@@ -149,7 +149,7 @@ class Baller(Main_Character):
             "min_ATK": self.minattack,
             "max_ATK": self.maxattack,
             "extra_dmg": self.extradamage,
-            "extra_chance": round((1/self.extradamagechance) * 100, 1),
+            "extra_chance": f"{round((1/self.extradamagechance) * 100, 1)}%",
             "color": "#e61111",
             "skills": [
                 {
@@ -231,7 +231,7 @@ class Slicer(Main_Character):
             "min_ATK": self.minattack,
             "max_ATK": self.maxattack,
             "pierce_dmg": self.pierce_dmg,
-            "pierce_chance": round((1/self.pierce_chance) * 100, 1),
+            "pierce_chance": f"{round((1/self.pierce_chance) * 100, 1)}%",
             "color": "#1809ebf6",
             "skills": [
                 {
@@ -308,7 +308,7 @@ class Crusher(Main_Character):
             "min_ATK": self.minattack,
             "max_ATK": self.maxattack,
             "cd_turn": self.cooldown_turn,
-            "cd_chance": round((1/self.cooldown_chance) * 100, 1),
+            "cd_chance": f"{round((1/self.cooldown_chance) * 100, 1)}%",
             "color": "#09eb23fb",
             "skills": [
                 {
