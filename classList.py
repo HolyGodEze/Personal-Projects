@@ -104,28 +104,52 @@ class Piercer(Main_Character):
 class Baller(Main_Character):
     def __init__(self, HP = 35, DEF = 0, minATK = 8, maxATK = 10):
         super().__init__(HP, DEF, minATK, maxATK)
-        self.extradamage = 5
-        self.extradamagechance = 6
+        self.extra_damage = 5
+        self.extra_damage_chance = 6
+        self.dodge_chance = 2
+        self.has_dodge = False
+        self.dodge_turns = 2
         self.triple_throw_CD = 2
         self.triple_throw_start_CD = 0
+        self.speed_up_cd = 3
+        self.speed_up_start_cd = 0
         self.gigantic_throw_CD = 4
         self.gigantic_throw_start_CD = 0
         
     def take_damage(self, damage):
-        self.hp -= damage
+        if self.has_dodge and die.randint(1, self.dodge_chance) == 1:
+            print("Dodged! Took no damage!")
+        else:
+            self.hp -= damage
     
     # Activate to throw a ball at the enemy, with a chance to deal extra damage.
     def ball_attack(self):
-        if die.randint(1, self.extradamagechance) == 1:
-            print(f"Dealt {self.extradamage} extra damage!")
+        if die.randint(1, self.extra_damage_chance) == 1:
+            print(f"Dealt {self.extra_damage} extra damage!")
             self.triple_throw_start_CD -= 1 if self.triple_throw_start_CD > 0 else 0
             self.gigantic_throw_start_CD -= 1 if self.gigantic_throw_start_CD > 0 else 0
-            return die.randint(self.minattack, self.maxattack) + self.extradamage
+            self.speed_up_start_cd -= 1 if self.speed_up_start_cd > 0 else 0
+            if self.has_dodge and self.dodge_turns > 0:
+                self.dodge_turns -= 1
+            elif self.has_dodge and self.dodge_turns == 0:
+                self.has_dodge = False
+                self.dodge_turns = 2
+            else:
+                pass
+            return die.randint(self.minattack, self.maxattack) + self.extra_damage
         else:
             dmg = die.randint(self.minattack, self.maxattack)
             print(f"Dealt {dmg} damage!")
             self.triple_throw_start_CD -= 1 if self.triple_throw_start_CD > 0 else 0
             self.gigantic_throw_start_CD -= 1 if self.gigantic_throw_start_CD > 0 else 0
+            self.speed_up_start_cd -= 1 if self.speed_up_start_cd > 0 else 0
+            if self.has_dodge and self.dodge_turns > 0:
+                self.dodge_turns -= 1
+            elif self.has_dodge and self.dodge_turns == 0:
+                self.has_dodge = False
+                self.dodge_turns = 2
+            else:
+                pass
             return dmg
     
     # Activate to throw three balls consecutively, dealing three hits of damage to the enemy. 2 turn CD.
@@ -133,12 +157,19 @@ class Baller(Main_Character):
         total_dmg = 0
         for _ in range(3):
             total_dmg += die.randint(self.minattack, self.maxattack)
-        print(total_dmg)
+        self.triple_throw_start_CD = self.triple_throw_CD
         return total_dmg
     
-    # Activate to increase the size of the ball, before throwing it at the enemy, dealing 30 damage. 4 turn CD.
+     # Activate to increase the speed of the character, granting a 50% chance to dodge an enemy's attack for 2 turns. 3 turn cooldown.
+    def Speed_Up(self):
+        self.speed_up_start_cd = self.speed_up_cd
+        return True 
+    
+    # Activate to increase the size of the ball, before throwing it at the enemy, dealing 20 damage. 4 turn CD.
     def Gigantic_Throw(self):
-        return 30
+        self.gigantic_throw_start_CD = self.gigantic_throw_CD
+        return 20
+    
     
     # Returns a skillset and stats for the Baller class
     def baller_stats_and_abilities(self):
@@ -148,8 +179,8 @@ class Baller(Main_Character):
             "DEF": self.defense,
             "min_ATK": self.minattack,
             "max_ATK": self.maxattack,
-            "extra_dmg": self.extradamage,
-            "extra_chance": f"{round((1/self.extradamagechance) * 100, 1)}%",
+            "extra_dmg": self.extra_damage,
+            "extra_chance": f"{round((1/self.extra_damage_chance) * 100, 1)}%",
             "color": "#e61111",
             "skills": [
                 {
@@ -160,6 +191,11 @@ class Baller(Main_Character):
                     "skill_name": "Triple Throw",
                     "skill_CD": self.triple_throw_CD,
                     "description": "Throw three balls consecutively at the enemy, dealing three hits of damage to the enemy."
+                },
+                {
+                    "skill_name": "Speed Up",
+                    "skill_CD": self.speed_up_cd,
+                    "description": "Increases the speed of the character, granting a 50% " + "chance to dodge an enemy's attack for 2 turns."
                 },
                 {
                     "skill_name": "Gigantic Throw",
@@ -326,7 +362,7 @@ class Crusher(Main_Character):
                     "description": "Slams the sledgehammer to a single enemy, dealing 25 damage."
                 },
                 {
-                    "skill_name": "Flurry Rush",
+                    "skill_name": "Shake The World",
                     "skill_CD": self.shake_the_world_cd,
                     "description": "Slams the ground to cause a massive earthquake to all enemies, dealing 30 damage. Starts with a cooldown of 9 turns."
                 }
